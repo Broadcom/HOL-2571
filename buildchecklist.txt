@@ -1,0 +1,103 @@
+BuildChecklist.txt v0.2 03 MAY 2021
+In the interest of easing the burden for this year's development teams, the HOL Core Team has put together this checklist to help identify and track the most common configuration challenges encountered while developing a vPod.  Most development teams are already familiar with the excellent HOL AutoCheck process and understand how critical it is to building a successful lab to safeguard a positive HOL user experience.  For those that are new to AutoCheck, it is an internally developed HOL tool that audits and reports on over 100 configuration points and generates a list of warnings and failures that, unless remediated, might contribute to a poor HOL user experience and require an explanation for your Infrastructure Team Lead.  The checklist topics are pulled directly from the AutoCheck script to illuminate these often misconfigured points, providing clear visibility throughout the development cycle.  It is highly recommended to run AutoCheck from the ISO (during development) to verify the integrity of the vPod (prior to internal testing) and to secure a clean report (prior to running through HOL Toolbox) as the pod progresses to Functional Testing.  Once the checklist is completed, running AutoCheck from the ISO or from HOL Toolbox will provide a predictable report and greatly speed up the vPod development cycle by inherently eliminating the time consuming back-and-forth activities generated from surprising AutoCheck reports.
+NOTE:  Be sure to delete this checklist from the desktop prior to uploading the vPod to vCD.
+If you have any recommendations to add to this list, reach out to the HOL Core Team on the #hol-officehours Slack channel.
+HOL Standards
+___ Validate vPod is based on a current and approved HOL template (i.e. 2021-HOL-Dual-Site-Base-vPod-7.0-v0.6, 2021-HOL-Single-Site-Base-vPod-7.0-v0.6, 2021-HOL-Single-Site-Base-vPod-6.7-v0.6 or 2021-HOL-Minimal-Base-vPod-v0.6)
+___ Validate the LCD in the HOL Development Toolbox has been updated with the vPod as-built details
+Passwords
+___ Validate HOL standard passwords are in use (i.e {REPLACE_WITH_OLD_PASSWORD}, {REPLACE_WITH_OLD_PASSWORD}{REPLACE_WITH_OLD_PASSWORD})
+___ Validate all passwords are set to NEVER expire Including NSX-T (i.e. admin, root and audit) (Default is 90-day Expiration)
+vSphere Configuration
+___ Validate vCenters are reachable
+___ Validate that unnecessary L1 ESXi hosts have been removed properly using the C:\hol\Tools\Remove-HolEsxiBase.ps1 Script
+___ Validate that unnecessary L2 VMs have been removed from vSphere
+___ Validate L2 VM Advanced Options are configured for uuid.action = keep
+___ Validate L2 Linux VM configuration for keyboard.typematicMinDelay = 2000000
+___ Validate L2 VMs have No CPU/Mem reservations, custom shares or limits unless enforced by VMware
+___ Validate All Windows 2012 VMs are configured to use the VMXNET3-type NIC
+___ Validate vCenter DRS is Set to Partial or Off (NOT Full or Manual) unless part of the lab
+___ Validate if vCenter DRS is Set to Off that vCenter Advanced setting is correct (i.e Name: config.vcls.clusters.domain-c1006.enabled Value: False)
+___ Validate vSphere HA is Disabled (unless required for demonstration)
+___ Validate all Win7/W2K3/W2K8 VMs are configured to use the skipRestart utility (i.e. Windows Start Menu Startup Folder)
+___ Validate vSphere 7 Storage Profile is not impacting storage I/O
+___ Validate all vSphere version and build numbers are the same in the vPod unless required for the lab
+___ Validate no snapshots are present for all L2 VMs unless required for the lab
+___ Validate all VMs can vMotion properly to ALL hosts without I/O issues or errors if part of lab
+___ Validate Storage vMotion functions properly without I/O issues or errors if part of lab
+SSL Certificates
+___ Validate SSL certificates are configured where required and validate correctly
+___ Validate SSL certificates expiration date
+___ Validate VMware Horizon Broker Tunnel SSL Certificate will not expire (if installed)
+SSH Authentication
+___ Validate SSH certificates are applied to all VMs and verify password-free login if possible
+___ Validate all PuTTY entries do not prompt for a password if possible
+Licensing
+___ Validate vSphere license expirations (e.g., ESXi and vCenter)
+___ Validate all vSphere license include the label “FOR VMWARE HANDS-ON LABS USE ONLY”
+___ Validate there are no vCenter or vSphere evaluation licenses
+___ Validate Windows OS licenses are activated
+___ Validate all VMware products (if installed) are licensed properly and will not expire before 12/31/2022 (vCD, vRA, vRO, vROPs and NTX-T)
+___ Validate 3rd-party licenses will not expire before 12/31/2022
+NTP Configuration
+___ Validate NTP is configured on ESXi hosts to use 192.168.100.1
+___ Validate all VMs are synchronized with NTP to use 192.168.100.1
+LabStartup
+___ Validate the C:\hol\labStartup.log doesn't contain any errors
+___ Validate all custom modifications to the LabStartup.ps1 script are working as expected
+___ Validate all internal and external URLs are reachable and return tested results
+Firewalls
+___ Validate all OS firewalls are disabled
+IP Addresses and DNS
+___ Validate ALL (L1 and L2) VMs are configured with static IP addresses unless DHCP is required
+___ Do not reference a DHCP address in the lab manual
+___ Validate DNS on Main Console contains forward and reverse entries for all L1 and L2 VMs
+Router and Proxy Configuration
+___ Validate vPodRouter iptables and firewall are working as expected
+___ Discuss router changes with your Infrastructure Team Lead (discouraged and should not be needed)
+___ Validate the vPodRouter proxy and Windows Internet Proxy are configured and working as expected
+Linux Configuration
+___ Validate there are NO SLES or RedHat VMs (unless included as VMware Appliances)
+___ Validate fsck is disabled for all Linux ext2/ext3/ext4 file systems
+___ Validate vSAN explicit HDD and SSD flags are configured properly (if vSAN is implemented)
+___ Validate Google Chrome (and other browsers, if installed) history and cache are cleared
+___ Validate after clearing cache, that Google Chrome browser does not prompt for "Open vmware-cip-launcher.exe" when logging in to the vCSA
+___ Validate Notepad++ displays a blank page on startup and close all other tabs
+Main Console Configuration
+___ Validate Windows security patches are up to date
+___ Validate the vPod starts properly and DesktopInfo displays the green "Ready" message on the desktop
+___ Validate the desktop is neatly organized and free of unnecessary shortcuts, files and other clutter
+___ Validate the desktop background is using the correct graphics for the development cycle
+___ Validate the Recycle Bin is empty
+___ Validate desktop README.TXT is complete and customer presentable (correct grammar/spelling)
+___ Validate DesktopInfo displayed information is correct and readable
+___ Validate the C:\Temp directory contains no large files ( larger than 10 KB)
+___ Validate all temporary storage / scratch disks are removed
+___ Validate all stray files (e.g.,. installers, downloads, logs, etc.) are deleted
+___ Validate Desktop Shortcut names are not truncated
+___ Validate the Main Console default screen resolution = 1280 x 800 in the VMRC
+___ Validate the Windows Taskbar is free of links (Do not remove HOL standard components)
+___ Validate the Windows Start Menu Startup folder is free of erroneous links (Do not remove HOL standard components)
+___ Validate there is not a PuTTY session for the vPodRouter
+___ Validate Windows Explorer Recent Locations History is clear
+___ Validate Windows Explorer Folder Options are set to "Don't Show Hidden Files, Folders and Drives"
+___ Validate Windows Explorer Quick Access and Recent File History are cleaned Up
+___ Validate Window dimensions are correct and visually appealing (i.e. not off screen, no weirdly wrapping text, color choices are easy to read)
+Browser Configurations
+___ Validate Windows Task Scheduler is configured to never check for updates for Google Chrome Browser (Disabled)
+___ Validate Google Chrome Browser plugins are configured to "Allow All" and are not blocked
+___ Validate Google Chrome Browser Advanced Settings are configured to never send data (i.e. "Automatically send usage statistics and crash reports to Google" and "Automatically send some system information and page content to Google to help detect dangerous apps and sites")
+___ Validate Google Chrome Browser Toolbar shortcuts are organized, legible and not truncated
+___ Validate unused shortcuts on the Google Chrome Browser Toolbar are removed
+___ Validate Mozilla Firefox Browser Privacy & Security are configured to never send data (i.e. disable "Allow Firefox to send technical and interaction data to Mozilla", "Allow Firefox to Send Backlogged Crash Reports on Your Behalf" and "Allow Firefox to Install and Run Studies")
+vCloud Director Configurations
+___ If vCloud Director is installed in your vPod (nested), validate vCloud Director Storage Leases never expire
+___ Validate the vPod name reflects the approved HOL naming standard (i.e. HOL-22xx-v0.x)
+___ Validate the vPod is accessible from vCloud Director using the VMware Remote Console (VMRC)
+___ Validate no snapshots are present for L1 VMs
+___ Validate the vPod passes your smoke testing
+___ Validate no more than 2 copies of the vPod exist in vCloud Director per Lab Team Member
+___ Validate old development copies and smoke tests of the vPod are removed from vCloud Director
+___ Validate all inserted media (i.e. ISOs, etc.) have been ejected from all L1 VMs
+vPod Testing
+___ Validate the vPod has been fully tested by multiple individuals inside and outside of your vPod development team
