@@ -1,0 +1,18 @@
+# edit as needed. set for LMC so change "main console" to windows if needed
+avicon-01a, Ubuntu Linux (64-bit), 10.0.0.87
+avicon-01b, Ubuntu Linux (64-bit), 10.0.1.87
+esx-01a, otherGuest64, 10.0.0.51
+esx-02a, otherGuest64, 10.0.0.52
+esx-03a, otherGuest64, 10.0.0.53
+esx-04a, otherGuest64, 10.0.0.54
+esx-05a, otherGuest64, 10.0.0.55
+esx-06a, otherGuest64, 10.0.0.56
+main console, Ubuntu Linux (64-bit), 10.0.0.10
+manager, Ubuntu Linux (64-bit), 10.0.0.11
+nsxmgr-01a, Ubuntu Linux (64-bit), 10.0.0.42
+stg-02a, freebsd64Guest, 10.10.20.60, 10.0.0.64
+vpodrouterhol, Debian GNU/Linux 10 (64 bit), 192.168.0.2
+vcsa-01a, other3xLinux64Guest, 10.0.0.22
+vra-01a, other3xLinux64Guest, 10.0.0.78
+
+
